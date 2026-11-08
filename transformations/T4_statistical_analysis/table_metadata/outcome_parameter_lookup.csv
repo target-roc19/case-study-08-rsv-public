@@ -1,0 +1,4 @@
+Description,tab_group,n_pat_exp,n_out_exp,py_exp,ir_est_exp,ir_lb_exp,ir_ub_exp,n_pat_con,n_out_con,py_con,ir_est_con,ir_lb_con,ir_ub_con,rr_est_crude,rr_lb_crude,rr_ub_crude,rr_est_adj,rr_lb_adj,rr_ub_adj
+Table 12 Incidence Rates of the outcome in Exposed and Control respectively,12,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0
+Table 13 Rate Ratios and their 95 percent CI for the analysis - crude,13,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0
+Table 13 Rate Ratios and their 95 percent CI for the analysis - adjusted,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1

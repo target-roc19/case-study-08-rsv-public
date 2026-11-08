@@ -1,0 +1,19 @@
+start_study_d: '2024-10-01'
+end_study_d: '2025-03-31'
+start_eligibility_date: YYYY-MM-DD
+end_study_date_this_report: YYYY-MM-DD
+year_length: 365.25
+month_length: 30.44
+obs_period_overlap: 180
+general_fup_d: 180
+start_look_back: YYYY-MM-DD
+length_lmp24: 168
+repo_name_ARS: xxx
+repo_name_JC: xxx
+use_t3_testdat: no
+use_t4_testdat: no
+export_results_to_JC_repo: no
+main_sensoring_date: .na.character
+start_rsv_season: '2024-10-22'
+exposure_name: 'Nirsevimab'
+

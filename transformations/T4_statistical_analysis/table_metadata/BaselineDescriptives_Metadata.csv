@@ -1,0 +1,9 @@
+var,type,reference_category,expectedCat,label,parent,parent_cat,header,include_ps,include_ipcw
+SV_AGE,NUM1,,NA,Age at t0 (in months),NA,NA,Demographics,FALSE,FALSE
+SV_AGE_GROUP,CAT,1,"1,2,3",Age category in months,NA,NA,NA,TRUE,TRUE
+SV_CALENDAR_WEEK,CAT,"W41_2024","W41_2024,W42_2024,W43_2024,W44_2024,W45_2024,W46_2024,W47_2024,W48_2024,W49_2024,W50_2024,W51_2024,W52_2024,W1_2025,W2_2025,W3_2025,W4_2025,W5_2025,W6_2025,W7_2025,W8_2025,W9_2025,W10_2025,W11_2025,W12_2025,W13_2025,W14_2025",Calendar week at T0,NA,NA,NA,FALSE,FALSE
+SV_SEX,CAT,"M","M,F",Sex,NA,NA,NA,TRUE,TRUE
+SV_ADI,CAT,"1","1,2,3,4,5,0",Area Deprivation index,NA,NA,NA,TRUE,TRUE
+SV_PRIOR_LRTI,CAT,"FALSE","FALSE,TRUE",LRTI episodes before t0,NA,NA,NA,TRUE,TRUE
+SV_HC_UTI_CAT,CAT,0,"0,1,2",N of visits before t0,NA,NA,NA,TRUE,TRUE
+SV_ANTIBIOTICS_CAT,CAT,0,"0,1,2",N of prescription for antibiotics before t0,NA,NA,NA,TRUE,TRUE

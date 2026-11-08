@@ -1,0 +1,46 @@
+VarName,category,VarLabel,integerVal
+SV_AGE_GROUP,<= 3 months,Age category in months,1
+SV_AGE_GROUP,> 3 to <= 6 months,Age category in months,2
+SV_AGE_GROUP,> 6 months,Age category in months,3
+SV_CALENDAR_WEEK,1 - 7 Oct 2024,Calendar week at T0,W41_2024
+SV_CALENDAR_WEEK,2 - 14 Oct 2024,Calendar week at T0,W42_2024
+SV_CALENDAR_WEEK,3 - 21 Oct 2024,Calendar week at T0,W43_2024
+SV_CALENDAR_WEEK,4 - 28 Oct 2024,Calendar week at T0,W44_2024
+SV_CALENDAR_WEEK,5 - 4 Nov 2024,Calendar week at T0,W45_2024
+SV_CALENDAR_WEEK,6 - 11 Nov 2024,Calendar week at T0,W46_2024
+SV_CALENDAR_WEEK,7 - 18 Nov 2024,Calendar week at T0,W47_2024
+SV_CALENDAR_WEEK,8 - 25 Nov 2024,Calendar week at T0,W48_2024
+SV_CALENDAR_WEEK,9 - 2 Dec 2024,Calendar week at T0,W49_2024
+SV_CALENDAR_WEEK,10 - 9 Dec 2024,Calendar week at T0,W50_2024
+SV_CALENDAR_WEEK,11 - 16 Dec 2024,Calendar week at T0,W51_2024
+SV_CALENDAR_WEEK,12 - 23 Dec 2024,Calendar week at T0,W52_2024
+SV_CALENDAR_WEEK,13 - 30 Dec 2024,Calendar week at T0,W1_2025
+SV_CALENDAR_WEEK,14 - 6 Jan 2025,Calendar week at T0,W2_2025
+SV_CALENDAR_WEEK,15 - 13 Jan 2025,Calendar week at T0,W3_2025
+SV_CALENDAR_WEEK,16 - 20 Jan 2025,Calendar week at T0,W4_2025
+SV_CALENDAR_WEEK,17 - 27 Jan 2025,Calendar week at T0,W5_2025
+SV_CALENDAR_WEEK,18 - 3 Feb 2025,Calendar week at T0,W6_2025
+SV_CALENDAR_WEEK,19 - 10 Feb 2025,Calendar week at T0,W7_2025
+SV_CALENDAR_WEEK,20 - 17 Feb 2025,Calendar week at T0,W8_2025
+SV_CALENDAR_WEEK,21 - 24 Feb 2025,Calendar week at T0,W9_2025
+SV_CALENDAR_WEEK,22 - 3 Mar 2025,Calendar week at T0,W10_2025
+SV_CALENDAR_WEEK,23 - 10 Mar 2025,Calendar week at T0,W11_2025
+SV_CALENDAR_WEEK,24 - 17 Mar 2025,Calendar week at T0,W12_2025
+SV_CALENDAR_WEEK,25 - 24 Mar 2025,Calendar week at T0,W13_2025
+SV_CALENDAR_WEEK,26 - 31 Mar 2025,Calendar week at T0,W14_2025
+SV_SEX,Male,Sex,M
+SV_SEX,Female,Sex,F
+SV_ADI,1 - least deprived,Area Deprivation index,1
+SV_ADI,2,Area Deprivation index,2
+SV_ADI,3,Area Deprivation index,3
+SV_ADI,4,Area Deprivation index,4
+SV_ADI,5 - most deprived,Area Deprivation index,5
+SV_ADI,Missing,Area Deprivation index,0
+SV_PRIOR_LRTI,False,LRTI episodes before t0,FALSE
+SV_PRIOR_LRTI,True,LRTI episodes before t0,TRUE
+SV_HC_UTI_CAT,0 visits,N of visits before t0,0
+SV_HC_UTI_CAT,1 visit,N of visits before t0,1
+SV_HC_UTI_CAT,2+ visits,N of visits before t0,2
+SV_ANTIBIOTICS_CAT,0 prescriptions,N of prescription for antibiotics before t0,0
+SV_ANTIBIOTICS_CAT,1 prescription,N of prescription for antibiotics before t0,1
+SV_ANTIBIOTICS_CAT,2+ prescriptions,N of prescription for antibiotics before t0,2

@@ -1,0 +1,194 @@
+# ---------------------------------------------------
+# Common elements
+# ---------------------------------------------------
+common:
+  composite_study_variables: transformations/common_configuration/RWE-BRIDGE/composite_study_variables.csv
+  test_root: tests/testthat/data
+
+DEAP_configuration:
+  name: TEST
+
+outputs:
+  dir_d3: tests/testthat/data/d4_studycohort
+  dir_d4: tests/testthat/data/d4_studycohort/actual
+  dir_d5: tests/testthat/data
+  dir_d6: tests/testthat/data
+
+# ---------------------------------------------------
+# T3 Study Design tests
+# ---------------------------------------------------
+T3:
+  script_root: transformations/T3_study_design/source_code
+
+# ---------------------------------------------------
+# T4 Statistical Analysis tests
+# ---------------------------------------------------
+T4:
+  outcome_analysis_tables:
+    script: transformations/T4_statistical_analysis/source_code/
+    input:
+      ext: csv
+    metadata:
+      outcome_analysis_types:    outcome_analysis_types.csv
+      outcome_parameter_lookup: outcome_parameter_lookup.csv
+    aesi_name:  SV_HOSP_RSV_LRTI
+    aesi_label: "Hospitalization for RSV-associated with Lower Respiratory Tract Infection"
+    scale_IR:   100000
+    output:
+      name: D5_CohortAnalyticLookup
+      table12_name: Table12
+      table13_crude_name: Table13_Crude
+      table13_adjusted_name: Table13_Adjusted
+      table16_name: Table16
+      table17_name: Table17
+      ext: csv
+    dir_output: tests/testthat/data/d5_cohort_analytic
+
+  iptw_ipcw:
+    modes:
+     - Main
+     - Supplement
+    dir_d4: tests/testthat/data/iptw_ipcw
+    dir_d5: tests/testthat/data/iptw_ipcw
+    d4_covariates:
+      name: D4_StudyCohortCovariates
+      ext: csv
+    d4_timevarying:
+      name: D4_StudyCohort_TimeVaryingCovariates
+      ext: csv
+    file_ext: csv
+    ps_variables: BaselineDescriptives_Metadata.csv
+    ps_trim_bounds:
+      - 0.01
+      - 0.99
+    ipcw_trunc_bounds:
+      - 0.01
+      - 0.99
+    se_threshold: 10
+    ps_fn_dir: transformations/common_functions/CohortPropensity
+    d4_iptw:
+      name: D4_StudyCohort_IPTW
+      ext: csv
+    d4_ipcw:
+      name: D4_StudyCohort_IPCW
+      ext: csv
+    d5_ps_coef:
+      name: D5_PS_Coef
+      ext: csv
+    d5_ps_model_building:
+      name: D5_PS_ModelBuilding
+      ext: csv
+
+# ---------------------------------------------------
+# Placeholder project-level template for scripts that
+# consume config_project$impute_outcome in test mode.
+# ---------------------------------------------------
+impute_outcome:
+  modes:
+    - Main
+    - Supplement
+  input:
+    fup:
+      main: ~
+      supplement: ~
+    cov:
+      main: ~
+      supplement: ~
+  output:
+    fup_mi:
+      main: ~
+      supplement: ~
+    fup_bw:
+      main: ~
+      supplement: ~
+
+create_eligibility:
+  script_path: transformations/T3_study_design/source_code/create_eligibility.R
+  input_path: tests/testthat/data/d3_eligibility/D3_MULTIPLE_EPISODES.csv
+  output_path: tests/testthat/data/d3_eligibility/actual/D3_ELIGIBILITY.csv
+  expected_output_path: tests/testthat/data/d3_eligibility/D3_ELIGIBILITY.csv
+
+create_cohort:
+  script_path: transformations/T3_study_design/source_code/create_cohort.R
+  input:
+    input_file_name: D3_ELIGIBILITY.csv
+    d3_spells_file_name: ~
+  output:
+    dir_d4: tests/testthat/data/d4_studycohort/actual
+    save_output: true
+    output_file_name: D4_StudyCohort
+    ext: csv
+  intermediate_output:
+    save_intermediate_outputs: false
+    dir_intermediate_outputs: tests/testthat/data/d4_studycohort/actual
+    profile_table_name: D3_LOOKUP_TABLE
+    matching_pop_name: D3_MATCHING_POP
+  matching:
+    vars:
+      - SV_AGE_GROUP
+      - SV_CALENDAR_WEEK
+    modes:
+      - without_replacement
+    dir_matching_db: tests/testthat/data/d4_studycohort/actual/matching_db.duckdb
+    n_cores: 1
+    start_seed: 42
+  bootstrap:
+    with_bootstrap: false
+    n_bootstraps: 1
+    dir_bootstrap: null
+  output_path: tests/testthat/data/d4_studycohort/actual/D4_StudyCohort_Main.csv
+  expected_output_path: tests/testthat/data/d4_studycohort/D4_StudyCohort_Main.csv
+
+create_baseline_tables:
+  script_path: transformations/T4_statistical_analysis/source_code/create_baseline_tables.R
+  table_ids:
+    - 4a
+    - 5a
+  input:
+    cov:
+      main: tests/testthat/data/baseline_tables/D4_StudyCohort_Covariates_Main.csv
+      supplement: tests/testthat/data/baseline_tables/D4_StudyCohort_Covariates_Supplement.csv
+    fup:
+      main: ~
+      supplement: ~
+    table_scenarios_path: transformations/T4_statistical_analysis/table_metadata/table_scenarios.csv
+    baseline_metadata_path: transformations/T4_statistical_analysis/table_metadata/BaselineDescriptives_Metadata.csv
+    baseline_label_lookup_path: transformations/T4_statistical_analysis/table_metadata/BaselineDescriptives_LabelLookup.csv
+    file_ext: csv
+  output:
+    dir_d5: tests/testthat/data/baseline_tables/actual
+  output_paths:
+    - tests/testthat/data/baseline_tables/actual/TEST_Table4a_Baseline.csv
+    - tests/testthat/data/baseline_tables/actual/TEST_Table5a_Baseline.csv
+  expected_output_paths:
+    - tests/testthat/data/baseline_tables/expected/TEST_Table4a_Baseline.csv
+    - tests/testthat/data/baseline_tables/expected/TEST_Table5a_Baseline.csv
+
+timevarying_covariates:
+  script_path: transformations/T3_study_design/source_code/timevarying_covariates.R
+  modes:
+    - Main
+  input:
+    d3_concepts:
+      main: tests/testthat/data/tv_cov/D3_CONCEPTS_parquet
+    d4_studycohort:
+      main: tests/testthat/data/tv_cov/D4_StudyCohort_Main.csv
+    d4_fup:
+      main: tests/testthat/data/tv_cov/D4_StudyCohortFup_Main.csv
+    d4_anchored_path:
+      main: tests/testthat/data/tv_cov/actual/D4_StudyVariablesAnchored
+  output:
+    main: tests/testthat/data/tv_cov/actual/D4_StudyCohort_TimeVaryingCovariates_Main.csv
+  output_path: tests/testthat/data/tv_cov/actual/D4_StudyCohort_TimeVaryingCovariates_Main.csv
+  expected_output_path: tests/testthat/data/tv_cov/D4_StudyCohort_TimeVaryingCovariates_Main.csv
+
+integration_tests:
+  - name: create_eligibility
+    config_key: create_eligibility
+  - name: create_cohort
+    config_key: create_cohort
+  - name: create_baseline_tables
+    config_key: create_baseline_tables
+  - name: timevarying_covariates
+    config_key: timevarying_covariates
+

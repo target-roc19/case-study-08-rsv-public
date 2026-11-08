@@ -1,0 +1,29 @@
+# ---------------------------------------------------
+# T5 directories
+# ---------------------------------------------------
+
+# ---------------------------------------------------
+# Clean previous run
+# ---------------------------------------------------
+cleanup:
+  intermediate_data_file: true
+  
+# ---------------------------------------------------  
+# T5 directories
+# ---------------------------------------------------
+T5:
+  name: "pool_postprocessing"
+  root: transformations/T5_pool_postprocessing
+  intermediate: intermediate_data_file
+  config: configuration
+  source_code: source_code
+  functions: source_code/functions
+
+# ---------------------------------------------------
+# T5 Substeps
+# ---------------------------------------------------
+substep:
+  create_D6_table1_1: false
+  create_D6_table1_2: false
+  run_hash_log_export: false
+

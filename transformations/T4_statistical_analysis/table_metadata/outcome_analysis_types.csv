@@ -1,0 +1,6 @@
+analysis_index,analysis_description,analysis_type,estimand,source_fup,source_weight,weight_col,enabled,timeVar,incidence_model,listed_by,pooling_method,pooling_condition
+1,Main analysis estimand 1 with hypothetical strategy and multipleimputation,main,1,D4_StudyCohortFup_MI_Main,D4_PS_Weights_IPTW_Main,stabilized_trunc_iptw,TRUE,,logbinomial,imputation_id,rubin,
+2,Main analysis estimand 2 with treatment strategy,main,2,D4_StudyCohortFup_Main,D4_PS_Weights_IPTW_Main,stabilized_trunc_iptw,TRUE,,logbinomial,NA,,
+3,Sensitivity analysis estimand 1 with IPCW,sensitivity,1,D4_StudyCohort_TimeVaryingCovariates_Main,D4_PS_Weights_IPCW_Main,trunc_iptw_ipcw,TRUE,index_months,timevarying,NA,,
+4,Sensitivity analysis estimand 1 with best worst case scenario,sensitivity,1,D4_StudyCohortFup_BW_Main,D4_PS_Weights_IPTW_Main,stabilized_trunc_iptw,TRUE,,logbinomial,bw_id,subset,bw_id %in% 1:4
+5,Supplementary analysis (matching with replacement cohort) estimand 1,supplement,1,D4_StudyCohortFup_MI_Supplement,D4_PS_Weights_IPTW_Supplement,stabilized_trunc_iptw,TRUE,,logbinomial,imputation_id,rubin,

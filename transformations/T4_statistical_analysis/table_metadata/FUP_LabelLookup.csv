@@ -1,0 +1,9 @@
+type,variable,label
+IE,end_control_d,IE1 - receipt of nirsevimab for the control group
+IE,death_d,IE2 - death
+censor,SV_HOSP_RSV_LRTI_d,Outcome
+censor,death_d,IE2 - death
+censor,end_spell_d,Disenrollment or migration
+censor,general_fup_d,End of general follow-up
+censor,end_study_d,End of data availability in the data source
+censor,end_control_d,IE1 - receipt of nirsevimab for the control group

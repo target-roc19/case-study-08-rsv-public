@@ -1,0 +1,12 @@
+concept_id,dap_name,cdm_name,cdm_table_name,column_name_1,column_name_2,column_name_3,expected_value_1,expected_value_2,expected_value_3,keep_value_column_name,keep_date_column_name,Comment
+HC_UTI,PEDIANET,CONCEPTION,VISIT_OCCURRENCE,meaning_of_visit,NA,NA,primary_care,NA,NA,NA,visit_start_date,NA
+HC_UTI,PEDIANET,CONCEPTION,VISIT_OCCURRENCE,meaning_of_visit,NA,NA,unknown_from_medical_diaries,NA,NA,NA,visit_start_date,NA
+LRTI_RSV_INFECTION,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,RSV_LRTI,hospital_diagnosis,NA,start_date_record,NA
+LRTI_RSV_INFECTION,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,LRTI,hospital_diagnosis,NA,start_date_record,NA
+LRTI_RSV_INFECTION,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,RSV_LRTI,emergency_room_diagnosis,NA,start_date_record,NA
+LRTI_RSV_INFECTION,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,LRTI,emergency_room_diagnosis,NA,start_date_record,NA
+LRTI_RSV_INFECTION,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,RSV_LRTI,primary_care_diagnosis,NA,start_date_record,NA
+HOSP_RSV_LRTI,PEDIANET,CONCEPTION,EVENTS,event_record_vocabulary,event_free_text,meaning_of_event,free_text,RSV_LRTI,hospital_diagnosis,NA,start_date_record,NA
+GEST_AGE,PEDIANET,CONCEPTION,MEDICAL_OBSERVATIONS,mo_meaning,NA,NA,mo_gestational_age,NA,NA,mo_source_value,mo_date,NA
+VP_NIRSEVIMAB_MOTHER,PEDIANET,CONCEPTION,SURVEY_OBSERVATIONS,so_source_column,so_source_value,NA,vacc_rsv,yes,NA,NA,so_date,"date is set to be the date of extraction date, the so_source_value can be 'yes' waiting for confirmation"
+DSC_ADI,PEDIANET,CONCEPTION,SURVEY_OBSERVATIONS,so_meaning,NA,NA,ADI,NA,NA,so_source_value,so_date,"date is set to be the date of extraction date, the so_source_value can be 'yes' waiting for confirmation"

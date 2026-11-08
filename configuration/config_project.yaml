@@ -1,0 +1,366 @@
+DEAP_configuration:
+  name: PEDIANET
+  data_instance: data/D2_cdm/PEDIANET_20260602
+  database_path: ~
+  data_model: ConcePTION
+outputs:
+  dir_d3: data/D3_study_variables
+  dir_d4: data/D4_analytic_datasets
+  dir_d5: data/D5_results
+  dir_d6: data/D6_report
+set_db:
+  cdm_metadata: transformations/common_configuration/CDM_metadata.rds
+  database_loader_config: configuration/config_set_db.json
+  output: data/D2_cdm/d2.duckdb
+process_codelist:
+  events_codelist_latest: transformations/common_configuration/RWE-BRIDGE/code_lists.csv
+  medicines_codelist_latest: transformations/common_configuration/RWE-BRIDGE/medicines_codelist.csv
+  vaccines_codelist_latest: transformations/common_configuration/RWE-BRIDGE/vaccines_codelist.csv
+  dap_specific_concept_map: transformations/common_configuration/RWE-BRIDGE/dap_specific_concept_map.csv
+  output_codelist_events: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_codelist_events.rds
+  output_codelist_medicines: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_codelist_medicines.rds
+  output_codelist_procedures: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_codelist_procedures.rds
+  output_codelist_vaccines: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_codelist_vaccines.rds
+  output_map_missing_infomation: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_concept_map_missing_infomation.rds
+  output_concept_map: transformations/T2_semantic_harmonization/intermediate_data_file/dap_specific_concept_map.rds
+create_simple_concepts:
+  since_when_data_complete: transformations/T2_semantic_harmonization/intermediate_data_file/since_when_data_complete.rds
+  d3_spells: data/D3_study_variables/D3_SPELLS.parquet
+  medicines_field_by_deap:
+    CPRD:
+      code_col: medicinal_product_id
+      coding_system: PRODCODEID
+    default:
+      code_col: medicinal_product_atc_code
+      coding_system: ATC
+create_complex_concepts:
+  input_dir: data/D3_study_variables/D3_CONCEPTS_parquet
+  output_dir: data/D3_study_variables/D3_CONCEPTS_parquet
+  d3_spells: data/D3_study_variables/D3_SPELLS.parquet
+  concept_meaning: transformations/common_configuration/RWE-BRIDGE/concept_meaning.csv
+  functions: transformations/T2_semantic_harmonization/source_code/functions
+  required_cols_d3_concept:
+  - ori_table
+  - unique_id
+  - person_id
+  - code
+  - coding_system
+  - value
+  - date
+  - concept_id
+process_persons:
+  persons: data/D2_cdm/d2.duckdb
+  cdm_source: data/D2_cdm/d2.duckdb
+  source_file: ~
+  output_persons: transformations/T2_semantic_harmonization/intermediate_data_file
+process_observation_periods:
+  D3_person_file: data/D3_study_variables/D3_PERSONS.parquet
+  source_file: ~
+  observation_periods_file: data/D2_cdm/d2.duckdb
+get_counts_all_concepts: ~
+calculate_eligibility:
+  d3_spells: data/D3_study_variables/D3_SPELLS.parquet
+  d3_concepts: data/D3_study_variables/D3_CONCEPTS.parquet
+studyvariables_anchored:
+  d3_all_concepts: data/D3_study_variables/D3_ALL_CONCEPTS.duckdb
+  d3_eligibility: data/D3_study_variables/D3_ELIGIBILITY.parquet
+  output_anchoring: data/D4_analytic_datasets/D4_STUDYVARIABLES_ANCHORED.parquet
+studyvariables_anchored_temp: ~
+create_cohort:
+  input:
+    dir_d3: data/D3_study_variables
+    input_file_name: D3_ELIGIBILITY.parquet
+    d3_spells_file_name: D3_SPELLS.parquet
+  output:
+    dir_d4: data/D4_analytic_datasets
+    save_output: yes
+    output_file_name: D4_StudyCohort
+    ext: RDS
+  intermediate_output:
+    save_intermediate_outputs: yes
+    dir_intermediate_outputs: transformations/T3_study_design/intermediate_data_file
+    profile_table_name: D3_LOOKUP_TABLE
+    matching_pop_name: D3_MATCHING_POP
+  matching:
+    vars:
+    - SV_AGE_GROUP
+    - SV_CALENDAR_WEEK
+    modes:
+    - without_replacement
+    - with_replacement
+    dir_matching_db: transformations/T3_study_design/intermediate_data_file/matching/matching_db.duckdb
+    n_cores: ~
+    start_seed: 42
+  bootstrap:
+    with_bootstrap: no
+    n_bootstraps: 1
+    dir_bootstrap: ~
+create_univariate_episodes:
+  d3_spells_file_name: D3_SPELLS.parquet
+  d3_concepts: D3_CONCEPTS_parquet
+  output_hive_path: D3_UNIVARIATE_EPISODES_parquet
+  batch_size: 5000
+create_multivariate_episodes:
+  d3_spells_file_name: D3_SPELLS.parquet
+  d3_univariate_episodes: D3_UNIVARIATE_EPISODES_parquet
+  output_path: D3_MULTIVARIATE_EPISODES.parquet
+  batch_size: 5000
+create_eligibility:
+  input_path: data/D3_study_variables/D3_MULTIVARIATE_EPISODES.parquet
+  output_path: data/D3_study_variables/D3_ELIGIBILITY.parquet
+anchor_covariates:
+  modes:
+  - Main
+  - Supplement
+  d4_studycohort:
+    name: D4_StudyCohort
+    ext: RDS
+  d3_concepts: D3_CONCEPTS_parquet
+  d3_spells: D3_SPELLS.parquet
+  output_anchor_path: D4_StudyVariablesAnchored
+  output:
+    fup_file: D4_StudyCohortFup
+    baseline_cov_file: D4_StudyCohortCovariates
+    ext: RDS
+impute_outcome:
+  modes:
+  - Main
+  - Supplement
+  input:
+    fup:
+      main: data/D4_analytic_datasets/D4_StudyCohortFup_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortFup_Supplement.RDS
+    cov:
+      main: data/D4_analytic_datasets/D4_StudyCohortCovariates_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortCovariates_Supplement.RDS
+  model:
+    n_imputations: 100
+    maxit: 10
+    seed: 20260703
+    method: logreg
+    predictors:
+    - group
+    - SV_AGE_GROUP
+    - SV_CALENDAR_WEEK
+    - SV_SEX
+    - SV_ADI
+    - SV_PRIOR_LRTI
+    - SV_HC_UTI_CAT
+    - SV_ANTIBIOTICS_CAT
+  output:
+    fup_mi:
+      main: data/D4_analytic_datasets/D4_StudyCohortFup_MI_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortFup_MI_Supplement.RDS
+    fup_bw:
+      main: data/D4_analytic_datasets/D4_StudyCohortFup_BW_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortFup_BW_Supplement.RDS
+impute_diagnosis:
+  modes: Main
+  fn_name: fn_imp_diag.R
+  input:
+    fup_file: D4_StudyCohortFup_MI
+    cov_file: D4_StudyCohortCovariates
+    ext: RDS
+  output:
+    dianosis: Table18_Outcome_Imputation_Diagnosis
+    ext: csv
+timevarying_covariates:
+  modes: Main
+  input:
+    d3_concepts:
+      main: data/D3_study_variables/D3_CONCEPTS_parquet
+    d4_studycohort:
+      main: data/D4_analytic_datasets/D4_StudyCohort_Main.RDS
+    d4_fup:
+      main: data/D4_analytic_datasets/D4_StudyCohortFup_Main.RDS
+    d4_anchored_path:
+      main: transformations/T3_study_design/intermediate_data_file/D4_StudyVariablesAnchored
+  output:
+    main: data/D4_analytic_datasets/D4_StudyCohort_TimeVaryingCovariates_Main.RDS
+outcome_analysis_lookup:
+  input:
+    ext: RDS
+  metadata:
+    outcome_analysis_types: outcome_analysis_types.csv
+    outcome_parameter_lookup: outcome_parameter_lookup.csv
+  aesi_name: SV_HOSP_RSV_LRTI
+  aesi_label: Hospitalization for RSV-associated with Lower Respiratory Tract Infection
+  scale_IR: 100000
+  output:
+    name: D5_CohortAnalyticLookup
+    table12_name: Table12
+    table13_crude_name: Table13_Crude
+    table13_adjusted_name: Table13_Adjusted
+    table15_name: Table15
+    table16_name: Table16_Predicted_Probabilities
+    table17_name: Table17_Observed_Counts
+    ext: csv
+weight_IPTW_IPCW:
+  modes:
+  - Main
+  - Supplement
+  d4_covariates:
+    name: D4_StudyCohortCovariates
+    ext: RDS
+  d4_timevarying:
+    name: D4_StudyCohort_TimeVaryingCovariates
+    ext: RDS
+  ps_variables: BaselineDescriptives_Metadata.csv
+  iptw_trunc_bounds:
+  - 0.01
+  - 0.99
+  ipcw_trunc_bounds:
+  - 0.05
+  - 0.95
+  se_threshold: 10
+  ps_fn_dir: transformations/common_functions/CohortPropensity
+  d4_iptw:
+    name: D4_PS_Weights_IPTW
+    ext: RDS
+  d4_ipcw:
+    name: D4_PS_Weights_IPCW
+    ext: RDS
+  d5_ps_coef:
+    name: D5_PS_Coef
+    ext: csv
+  d5_ps_model_building:
+    name: D5_PS_ModelBuilding
+    ext: csv
+  descriptive_overall: BaselineDescriptives_Overall.csv
+diagnosis_IPTW_IPCW:
+  common:
+    method_weights:
+    - iptw
+    - ipcw
+    d4_covariates:
+      name: D4_StudyCohortCovariates
+      ext: RDS
+    ps_variables: BaselineDescriptives_Metadata.csv
+    ps_fn_dir: transformations/common_functions/CohortPropensity
+    descriptive_overall: BaselineDescriptives_Overall.csv
+  iptw:
+    enabled: yes
+    label: IPTW
+    axis_label: IPT
+    modes:
+    - Main
+    - Supplement
+    diagnostics:
+      propensity_score:
+        enabled: yes
+        modes:
+        - Main
+        - Supplement
+      model_table:
+        enabled: yes
+        modes:
+        - Main
+        - Supplement
+      weight_description:
+        enabled: yes
+        modes:
+        - Main
+        - Supplement
+      asd:
+        enabled: yes
+        modes: Main
+      weight_distribution:
+        enabled: yes
+        modes:
+        - Main
+        - Supplement
+    d4_weights:
+      name: D4_PS_Weights_IPTW
+      ext: RDS
+    d5_ps_coef:
+      name: D5_PS_Coef
+      ext: csv
+    ps_score_col: p_score
+    include_col: include_after_trimming
+    include_value: yes
+    trunc_bounds:
+    - 0.01
+    - 0.99
+    weight_col: stabilized_iptw
+    trunc_weight_col: stabilized_trunc_iptw
+    model_exclude_coefficients:
+    - (Intercept)
+    - SV_AGE
+    ps_plot_name: Figure3_4_KernelDensityPS
+    ps_weight_table_name:
+      Main: Table10_PS_IPTW
+      Supplement: Table11_PS_IPTW
+    table_name: D5_IPTW_Description
+    asd_table_name: D5_ASD_IPTW
+    asd_plot_name: Figure2_ASD_IPTW
+    distribution_plot_name: Figure5_Density_IPTW
+    model_table_name: Table9_PS_Descriptives
+  ipcw:
+    enabled: yes
+    label: IPCW
+    axis_label: IPC
+    modes: Main
+    diagnostics:
+      propensity_score:
+        enabled: no
+      model_table:
+        enabled: no
+      weight_description:
+        enabled: yes
+        modes: Main
+      asd:
+        enabled: no
+      weight_distribution:
+        enabled: yes
+        modes: Main
+    d4_weights:
+      name: D4_PS_Weights_IPCW
+      ext: RDS
+    trunc_bounds:
+    - 0.05
+    - 0.95
+    weight_col: iptw_ipcw
+    trunc_weight_col: trunc_iptw_ipcw
+    person_weight_aggregation: last
+    order_cols:
+    - time
+    - follow_up_time
+    table_name: D5_IPCW_Description
+    asd_table_name: D5_ASD_IPCW
+    asd_plot_name: Figure2_ASD_IPCW
+    distribution_plot_name: Figure5_Density_IPCW
+create_baseline_tables:
+  table_ids: ~
+  input:
+    cov:
+      main: data/D4_analytic_datasets/D4_StudyCohortCovariates_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortCovariates_Supplement.RDS
+    fup:
+      main: data/D4_analytic_datasets/D4_StudyCohortFup_Main.RDS
+      supplement: data/D4_analytic_datasets/D4_StudyCohortFup_Supplement.RDS
+    table_scenarios_path: transformations/T4_statistical_analysis/table_metadata/table_scenarios.csv
+    baseline_metadata_path: transformations/T4_statistical_analysis/table_metadata/BaselineDescriptives_Metadata.csv
+    baseline_label_lookup_path: transformations/T4_statistical_analysis/table_metadata/BaselineDescriptives_LabelLookup.csv
+    file_ext: RDS
+  output:
+    dir_d5: data/D5_results
+create_cohort_tables: ~
+create_censor_tables:
+  input:
+    fup: D4_StudyCohortFup
+    dir_d4: data/D4_analytic_datasets
+    dir_metadata: table_metadata
+    file_ext: RDS
+  output:
+    dir_d5: data/D5_results
+plot_outcome:
+  input:
+    cohort_lookup: D5_CohortAnalyticLookup
+    file_ext: csv
+  diagnostics:
+    schoenfeld:
+      enabled: no
+    loglog:
+      enabled: no
+  metadata:
+    outcome_analysis_types: outcome_analysis_types.csv

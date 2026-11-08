@@ -1,0 +1,56 @@
+## Metadata
+
+| Table name                | D3_ELIGIBILITY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Description               | A data object which defines which members of the source population are eligible vs ineligible for entry into the cohort (based on study variable information). To be eligible you must meet all inclusion (and no exclusion) criteria on at least one calendar date in the study enrollment period. As well as dates and inclusion/exclusion info, this object contains information on any and all matching variables to be used. This is used as input for the cohort selection (matching) process |
+| Source                    | D3_MULTIVARIATE_EPISODES and `transformations/common_configuration/RWE-BRIDGE/composite_study_variables.csv` |
+| Step                      | `transformations/T3_study_design/source_code/create_eligibility.R`                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Content                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Population                | All individuals who are in the data instance who have observations that fall within the study period (i.e. are registered in the data source between start study date and end study date)                                                                                                                                                                                                                                                                                                           |
+| Unit of Observation (UoO) | Spell/Status (period of time within a person during which eligibility is ascertained for exposed or control status, and some covariate profile is fixed) One or more rows per person (key: person_id, start)                                                                                                                                                                                                                                                                                        |
+
+## Codebook
+
+| variable_in_output      | variable(s) needed | retrieved | computed | format    | rule of calculation                                                                                                                                                                                                                                      | description                                                                                                                | vocabulary   |
+| ----------------------- | ------------------ | --------- | -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| person_id               | D3_MULTIVARIATE_EPISODES/person_id | x | | character | Carried from the multivariate episodes input | person_id | |
+| start_episode           | D3_MULTIVARIATE_EPISODES/start_episode | x | | Date | Carried from the multivariate episodes input | Start date of the eligible episode | |
+| end_episode             | D3_MULTIVARIATE_EPISODES/end_episode | x | | Date | Carried from the multivariate episodes input | End date of the eligible episode | |
+| INCL_UNDER12M           | D3_MULTIVARIATE_EPISODES/INCL_UNDER12M | x | | boolean | Carried from the multivariate episodes input | Age <= 12 months | TRUE / FALSE |
+| INCL_29W_GESTAGE        | D3_MULTIVARIATE_EPISODES/INCL_29W_GESTAGE | x | | boolean | Carried from the multivariate episodes input | Born at >= 29 weeks gestational age | TRUE / FALSE |
+| INCL_ENROLLED           | D3_MULTIVARIATE_EPISODES/INCL_ENROLLED | x | | boolean | Carried from the multivariate episodes input | Is enrolled in data source | TRUE / FALSE |
+| EXCL_LRTI_RSV_INFECTION | D3_MULTIVARIATE_EPISODES/EXCL_LRTI_RSV_INFECTION | x | | boolean | Carried from the multivariate episodes input | Having an LRTI episode | TRUE / FALSE |
+| EXCL_NIVERSIMAB_MOTHER  | D3_MULTIVARIATE_EPISODES/EXCL_NIVERSIMAB_MOTHER | x | | boolean | Carried from the multivariate episodes input | Mother received RSV vaccine during pregnancy | TRUE / FALSE |
+| EXCL_IMMUNODEF          | D3_MULTIVARIATE_EPISODES/EXCL_IMMUNODEF | x | | boolean | Carried from the multivariate episodes input | Immunodeficiency | TRUE / FALSE |
+| EXCL_LUNGDIS            | D3_MULTIVARIATE_EPISODES/EXCL_LUNGDIS | x | | boolean | Carried from the multivariate episodes input | Chronic lung disease | TRUE / FALSE |
+| EXCL_HEARTDIS           | D3_MULTIVARIATE_EPISODES/EXCL_HEARTDIS | x | | boolean | Carried from the multivariate episodes input | Chronic heart disease | TRUE / FALSE |
+| EXCL_CYSTICFRIBROSIS    | D3_MULTIVARIATE_EPISODES/EXCL_CYSTICFRIBROSIS | x | | boolean | Carried from the multivariate episodes input | Cystic fibrosis | TRUE / FALSE |
+| EXCL_NEUROMUSCULARDIS   | D3_MULTIVARIATE_EPISODES/EXCL_NEUROMUSCULARDIS | x | | boolean | Carried from the multivariate episodes input | Neuromuscular disease | TRUE / FALSE |
+| EXCL_CRANCONANOM        | D3_MULTIVARIATE_EPISODES/EXCL_CRANCONANOM | x | | boolean | Carried from the multivariate episodes input | Craniofacial congenital anomalies | TRUE / FALSE |
+| EXCL_GESTAGE_AGESEAS    | D3_MULTIVARIATE_EPISODES/EXCL_GESTAGE_AGESEAS | x | | boolean | Carried from the multivariate episodes input | Born at 29-35 weeks gestational age and >= 6 months old at RSV-season start | TRUE / FALSE |
+| EXCL_HEARTTRANS         | D3_MULTIVARIATE_EPISODES/EXCL_HEARTTRANS | x | | boolean | Carried from the multivariate episodes input | Recent heart transplant | TRUE / FALSE |
+| INCL_IN_ELIGIBLE_POP    | D3_MULTIVARIATE_EPISODES inclusion/exclusion flags, composite_study_variables.csv | | x | boolean | Computed by `compute_eligibility()` using composite-variable metadata | Meets the configured eligibility criteria | TRUE / FALSE |
+| SV_NIRSEVIMAB           | D3_MULTIVARIATE_EPISODES/SV_NIRSEVIMAB | x | | boolean | Carried from the multivariate episodes input | Receives exposure at the start date | TRUE / FALSE |
+| SV_EXPOSURE_EVER_BEFORE | D3_MULTIVARIATE_EPISODES/SV_EXPOSURE_EVER_BEFORE | x | | boolean | Carried from the multivariate episodes input | Ever received exposure before | TRUE / FALSE |
+| eligible_exposed        | D3_MULTIVARIATE_EPISODES/INCL_IN_ELIGIBLE_POP, SV_NIRSEVIMAB, SV_EXPOSURE_EVER_BEFORE | | x | boolean | Computed from the input eligibility and exposure flags | Eligible exposed status | TRUE / FALSE |
+| eligible_control        | D3_MULTIVARIATE_EPISODES/INCL_IN_ELIGIBLE_POP, SV_NIRSEVIMAB, SV_EXPOSURE_EVER_BEFORE | | x | boolean | Computed from the input eligibility and exposure flags | Eligible control status | TRUE / FALSE |
+| SV_AGE_GROUP            | D3_MULTIVARIATE_EPISODES/SV_AGE_GROUP | x | | integer | Carried from the multivariate episodes input | Matching variable: age group | 1,2,3 |
+| SV_CALENDAR_WEEK        | D3_MULTIVARIATE_EPISODES/SV_CALENDAR_WEEK | x | | integer | Carried from the multivariate episodes input | Matching variable: calendar week | |
+
+## Example
+
+Below an example dataset, showing data from four three distinct individuals. Individual 1 gets the vaccine on 1st Feb 2021. Previous to that date they were eligible as a control. After that date they are not eligible due to the exclusion criteria, and not eligible as control for having received the vaccine. Person 2 is eligible as control until they turn 12 months of age, on the 8th June 2021; they are ineligible for the remainder of the time period. Person 3 is eligible as a control unit for the year of 2021. Individual 4 is eligible as an exposed on 1st Jan 2021.
+
+| person_id | start      | end        | INCL_UNDER12M | ... | EXCL_LRTI_RSV_INFECTION | INCL_IN_ELIGIBLE_POP | SV_NIRSEVIMAB | eligible_exposed | eligible_control |
+| --------- | ---------- | ---------- | ------------- | --- | ----------------------- | -------------------- | ------------- | ---------------- | ---------------- |
+| 1         | 2021-01-01 | 2021-01-31 | TRUE          |     | FALSE                   | TRUE                 | FALSE         | FALSE            | TRUE             |
+| 1         | 2021-02-01 | 2021-02-01 | TRUE          |     | TRUE                    | FALSE                | TRUE          | FALSE            | FALSE            |
+| 1         | 2021-02-02 | 2021-12-31 | FALSE         |     | TRUE                    | FALSE                | FALSE         | FALSE            | FALSE            |
+| 2         | 2021-01-01 | 2021-06-07 | TRUE          |     | FALSE                   | TRUE                 | FALSE         | FALSE            | TRUE             |
+| 2         | 2021-06-08 | 2021-12-31 | FALSE         |     | FALSE                   | FALSE                | FALSE         | FALSE            | FALSE            |
+| 3         | 2021-01-01 | 2021-12-31 | TRUE          |     | FALSE                   | TRUE                 | FALSE         | FALSE            | TRUE             |
+| 4         | 2021-01-01 | 2021-01-01 | TRUE          |     | FALSE                   | TRUE                 | TRUE          | TRUE             | FALSE            |
+
+## Processing Steps
+
+First, retrieve needed variables from D3_MULTIVARIATE_EPISODES. Then, calculate columns 'INCL_IN_ELIGIBLE_POP', 'eligible_exposed', 'eligible_control' based on the rules.

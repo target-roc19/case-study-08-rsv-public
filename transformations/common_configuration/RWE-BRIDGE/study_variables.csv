@@ -1,0 +1,28 @@
+variable_id,concept_id,information_source,exposure,outcome,IE,covariate,TV,eligibility,window_name,variable_type,missing_set_to,start_offset,end_offset,selector,variable_description
+SV_NIRSEVIMAB,VP_NIRSEVIMAB,vaccines codelist,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,0,0,NA,Vaccination of NIRSEVIMAB
+SV_NIRSEVIMAB_IE,VP_NIRSEVIMAB,vaccines codelist,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,risk,BOOL,FALSE,0,180,EARLIEST,Intercurrent event: control receives Vaccination of NIRSEVIMAB
+SV_HOSP_RSV_LRTI,HOSP_RSV_LRTI,dap_specific_codelist,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,risk,BOOL,FALSE,0,180,EARLIEST,Outcome: Hospitalization for RSV-associated with Lower Respiratory Tract Infection
+SV_SEX,SEX,D3,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,lookback,CAT,NA,-99999999,-1,LATEST,Cov: Sex
+SV_PRIOR_LRTI,LRTI_RSV_INFECTION,complex concept,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,lookback,BOOL,FALSE,-99999999,-16,EARLIEST,Cov:  Prior LRTI episodes
+SV_HC_UTI,HC_UTI,dap_specific_codelist,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,lookback,INT,0,-99999999,-1,COUNT,Cov:  Health Care Utilization - Number of visits before time 0.
+SV_ANTIBIOTICS,DP_ANTIBIOTICS,medicines_codelist,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,lookback,INT,0,-99999999,-1,COUNT,Cov: Number of antibiotic prescriptions
+SV_HC_UTI_TV,HC_UTI,dap_specific_codelist,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,risk,INT,0,0,0,COUNT,Time varying covariates since T0:  Health Care Utilization - Number of visits before time 0.
+SV_ANTIBIOTICS_TV,DP_ANTIBIOTICS,medicines_codelist,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,risk,INT,0,0,0,COUNT,Time varying covariates since T0: Number of antibiotic prescriptions
+EXCL_LRTI_RSV_INFECTION,LRTI_RSV_INFECTION,dap_specific_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-15,0,EARLIEST,Exclusion criteria: Ongoing lower respiratory tract infection or RSV infection
+EXCL_IMMUNODEF,PP_IMMUNODEF,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab - Immunodeficiency
+EXCL_LUNGDIS,R_LUNG_DISEASES_NEONATE_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab - Chronic lung disease
+EXCL_HEARTDIS,C_HEART_DISEASE_CONG_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab - Chronic heart disease
+EXCL_CYSTICFRIBROSIS,O_CYCTICFIBROSIS_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab - Cystic fibrosis
+EXCL_NEUROMUSCULARDIS,N_NEUROMUSC_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab   - Neuromuscular diseases
+EXCL_CRANCONANOM,CONG_CRANIOF_ANOMALIES_CONG_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab   - Craniofacial congenital anomalies
+EXCL_GESTAGE_AGESEAS,CC_GESTAGE_AGESEAS,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab   - born at 29 <= x <= 35 weeks gestational age and > 6 months of age at the start of the RSV season
+EXCL_HEARTTRANS,TP_HEARTTRANSPLANT_COV,events_codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Exclusion criteria:  The infant is eligible to receive palivizumab - recent heart transplant
+EXCL_NIVERSIMAB_MOTHER,VP_NIRSEVIMAB_MOTHER,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Excludion criteria: The mother has received RSV vaccine during the pregnancy
+INCL_29W_GESTAGE,CC_29W_GESTAGE,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,Born at 29 weeks gestational age
+INCL_UNDER12M,CC_12M_ONEXPOSURE,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,<=12 months of age at t0
+INCL_ENROLLED,PP_ENROLLED,complex concept,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,0,LATEST,is enrolled in data source
+SV_ADI,PP_ADI,complex concept,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,lookback,CAT,0,-99999999,0,LATEST,Cov: Area deprivation index (Categorical (from 1 to 5) ) Empty is consider a category
+INCL_IN_ELIGIBLE_POP,,composite,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,0,0,LATEST,
+SV_EXPOSURE_EVER_BEFORE,VP_NIRSEVIMAB,vaccines codelist,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,lookback,BOOL,FALSE,-99999999,-1,EARLIEST,Prior exposure: has the individual ever received the exposure treatment before index date
+SV_AGE_GROUP,PP_AGE_GROUP,complex concept,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,lookback,INT,NA,-99999999,0,LATEST,Matching variable: age group at index date (1: ≤3.0 months; 2: >3.0–≤6.0 months; 3: >6.0 months)
+SV_CALENDAR_WEEK,PP_CALENDAR_WEEK,complex concept,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,lookback,CAT,NA,-99999999,0,LATEST,Matching variable: ISO calendar week of nirsevimab administration

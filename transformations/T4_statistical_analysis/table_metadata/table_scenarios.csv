@@ -1,0 +1,11 @@
+table_id,table_type,table_title,cohort,subset,suffix,group_col,weighted,weight_file,enabled
+4a,baseline,Baseline characteristics of the matched cohort (main analysis without replacement unweighted),Main,,,group,FALSE,NA,TRUE
+4b,baseline,Baseline characteristics of the matched cohort (main analysis without replacement weighted),Main,,,group,TRUE,D4_PS_Weights_IPTW_Main.RDS,TRUE
+5a,baseline,Baseline characteristics of the matched cohort (supplementary analysis with replacement unweighted),Supplement,,,group,FALSE,NA,TRUE
+5b,baseline,Baseline characteristics of the matched cohort (supplementary analysis with replacement weighted),Supplement,,,group,TRUE,D4_PS_Weights_IPTW_Supplement.RDS,TRUE
+14a,baseline,Baseline covariates levels and differences between non-administratively censored and administratively censored units (main analysis without replacement unweighted),Main,"admin_censor_est1 != ""uncensored""",,admin_censor_est1,FALSE,NA,TRUE
+14b,baseline,Baseline covariates levels and differences between non-administratively censored and administratively censored units (main analysis without replacement weighted),Main,"admin_censor_est1 != ""uncensored""",,admin_censor_est1,TRUE,D4_PS_Weights_IPTW_Main.RDS,TRUE
+6,censor,"Follow-up, intercurrent events, and censoring reasons in the exposed and control groups for cohort in the main analysis (Estimand 1)",Main,,est1,group,FALSE,,TRUE
+6.1,censor,"Follow-up, intercurrent events, and censoring reasons in the exposed and control groups for cohort in the main analysis (Estimand 1), separated by observed and imputed outcome status",Main,,est1,group,FALSE,,TRUE
+7,censor,"Follow-up, intercurrent events, and censoring reasons in the exposed and control groups for cohort in the main analysis (Estimand 2)",Main,,est2,group,FALSE,,TRUE
+8,censor,"Follow-up, intercurrent events, and censoring reasons in the exposed and control groups for cohort in the supplemental analysis (Estimand 1)",Supplement,,est1,group,FALSE,,TRUE

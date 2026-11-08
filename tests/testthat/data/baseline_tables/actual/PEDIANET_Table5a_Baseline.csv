@@ -1,0 +1,54 @@
+label,N_exposed,perc_exposed,N_control,perc_control,asd
+"Total",4,NA,4,NA,NA
+"Demographics",NA,NA,NA,NA,NA
+"Age at t0 (in months)",NA,NA,NA,NA,0.008
+"Mean (SD)",4.75,"2.901",4.725,"3.172",NA
+"Median (Q1, Q3)",4.25,"(2.75, 6.25)",4,"(2.575, 6.15)",NA
+"Age category in months",NA,NA,NA,NA,0
+"<= 3 months",2,"50",2,"50",NA
+"> 3 to <= 6 months",1,"25",1,"25",NA
+"> 6 months",1,"25",1,"25",NA
+"Calendar week at T0",NA,NA,NA,NA,0
+"1 - 7 Oct 2024",0,"0",0,"0",NA
+"2 - 14 Oct 2024",1,"25",1,"25",NA
+"3 - 21 Oct 2024",1,"25",1,"25",NA
+"4 - 28 Oct 2024",1,"25",1,"25",NA
+"5 - 4 Nov 2024",1,"25",1,"25",NA
+"6 - 11 Nov 2024",0,"0",0,"0",NA
+"7 - 18 Nov 2024",0,"0",0,"0",NA
+"8 - 25 Nov 2024",0,"0",0,"0",NA
+"9 - 2 Dec 2024",0,"0",0,"0",NA
+"10 - 9 Dec 2024",0,"0",0,"0",NA
+"11 - 16 Dec 2024",0,"0",0,"0",NA
+"12 - 23 Dec 2024",0,"0",0,"0",NA
+"13 - 30 Dec 2024",0,"0",0,"0",NA
+"14 - 6 Jan 2025",0,"0",0,"0",NA
+"15 - 13 Jan 2025",0,"0",0,"0",NA
+"16 - 20 Jan 2025",0,"0",0,"0",NA
+"17 - 27 Jan 2025",0,"0",0,"0",NA
+"18 - 3 Feb 2025",0,"0",0,"0",NA
+"19 - 10 Feb 2025",0,"0",0,"0",NA
+"20 - 17 Feb 2025",0,"0",0,"0",NA
+"21 - 24 Feb 2025",0,"0",0,"0",NA
+"22 - 3 Mar 2025",0,"0",0,"0",NA
+"23 - 10 Mar 2025",0,"0",0,"0",NA
+"24 - 17 Mar 2025",0,"0",0,"0",NA
+"Sex",NA,NA,NA,NA,0
+"Male",2,"50",2,"50",NA
+"Female",2,"50",2,"50",NA
+"Area Deprivation index",NA,NA,NA,NA,1.155
+"1 - least deprived",1,"25",1,"25",NA
+"2",1,"25",1,"25",NA
+"3",1,"25",1,"25",NA
+"4",0,"0",1,"25",NA
+"5 - most deprived",1,"25",0,"0",NA
+"Missing",0,"0",0,"0",NA
+"LRTI episodes before t0",NA,NA,NA,NA,0
+"False",3,"75",3,"75",NA
+"True",1,"25",1,"25",NA
+"N of visits before t0",NA,NA,NA,NA,0.536
+"Mean (SD)",0.75,"0.957",1.5,"1.732",NA
+"Median (Q1, Q3)",0.5,"(0, 1.25)",1,"(0.75, 1.75)",NA
+"N of prescription for antibiotics before t0",NA,NA,NA,NA,0
+"Mean (SD)",0.75,"0.957",0.75,"0.957",NA
+"Median (Q1, Q3)",0.5,"(0, 1.25)",0.5,"(0, 1.25)",NA

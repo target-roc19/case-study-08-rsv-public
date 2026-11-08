@@ -1,0 +1,15 @@
+concept_id,function,sub_concept_id,Comment
+CC_29W_GESTAGE,create_29w_gestage,GEST_AGE,
+CC_29W_GESTAGE,create_29w_gestage,birth_date,
+CC_12M_ONEXPOSURE,create_under12m,birth_date,
+CC_GESTAGE_AGESEAS,create_gestage_ageseas,birth_date,
+CC_GESTAGE_AGESEAS,create_gestage_ageseas,GEST_AGE,
+PP_IMMUNODEF,create_or,I_HIVNOAIDS_COV,
+PP_IMMUNODEF,create_or,IM_IMMUNODEFWITHOUTHIV_COV,
+PP_IMMUNODEF,create_or,I_IMMUNODEF_COV,
+PP_IMMUNODEF,create_or,IM_TRANSPLANTRECIPIENT_COV,
+PP_AGE_GROUP,create_age_group,birth_date,1: ≤3.0 months; 2: >3.0–≤6.0 months; 3: >6.0 months
+PP_CALENDAR_WEEK,calculate_calendar_week,VP_NIRSEVIMAB,
+PP_ADI,create_adi,DSC_ADI,
+PP_ENROLLED,create_enrolled,,
+
