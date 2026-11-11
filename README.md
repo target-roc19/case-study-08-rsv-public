@@ -57,7 +57,7 @@ Each data object in the pipeline is documented in a corresponding **codebook** w
 
 ### Dummy Data
 - Test data for a number of intermediate data objects can be found in `tests/testthat/test_data`
-- Synthetic CDM will be made available soon
+- Synthetic CDM will be made publicly available soon, in the mean time available on request from the programming team (below)
 
 ## How to Run
 1. Store dummy CDM in `data/D2_cdm`
